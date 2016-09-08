@@ -21,9 +21,10 @@ ENV MYSQLJAVA_URL http://repo2.maven.org/maven2/mysql/mysql-connector-java/${MYS
 ENV BCPROVJAVA_URL http://central.maven.org/maven2/org/bouncycastle/bcprov-${BCPROVJDK_VERSION}/${BCPROV_VERSION}/bcprov-${BCPROVJDK_VERSION}-${BCPROV_VERSION}.jar
 ENV BCPKIXJAVA_URL http://central.maven.org/maven2/org/bouncycastle/bcpkix-${BCPKIXJDK_VERSION}/${BCPKIX_VERSION}/bcpkix-${BCPKIXJDK_VERSION}-${BCPKIX_VERSION}.jar
 
-ENV JENKINS_VERSION 2.21-1.1
-ENV JENKINS_REPO http://pkg.jenkins-ci.org/redhat/jenkins.repo
-ENV JENKINS_REPO_KEY http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+# This version no longer exists in the repos, and the newer version don't work on java jre 1.6
+# See https://jenkins.io/blog/2015/04/06/good-bye-java6/
+ENV JENKINS_VERSION 1.580.1
+ENV JENKINS_URL https://updates.jenkins-ci.org/download/war/${JENKINS_VERSION}/jenkins.war
 ENV JENKINS_REPO_PLUGINS https://updates.jenkins-ci.org/download/plugins
 ENV JENKINS_GEARMAN_PLUGIN ${JENKINS_REPO_PLUGINS}/gearman-plugin/0.1.1/gearman-plugin.hpi
 
@@ -38,11 +39,11 @@ RUN curl --silent --show-error --retry 12 --retry-delay 10 -L -o $SITE_PATH/lib/
 RUN curl --silent --show-error --retry 12 --retry-delay 10 -L -o $SITE_PATH/lib/bcprov-$BCPROVJDK_VERSION-$BCPROV_VERSION_T.jar $BCPROVJAVA_URL
 RUN curl --silent --show-error --retry 12 --retry-delay 10 -L -o $SITE_PATH/lib/bcpkix.$BCPROVJDK_VERSION-$BCPROV_VERSION_T.jar $BCPKIXJAVA_URL
 
-RUN curl --silent --show-error --retry 12 --retry-delay 10 -L -o /etc/yum.repos.d/jenkins.repo $JENKINS_REPO
-RUN rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
-RUN yum -y install jenkins-${JENKINS_VERSION}
-
+#RUN curl --silent --show-error --retry 12 --retry-delay 10 -L -o /etc/yum.repos.d/jenkins.repo $JENKINS_REPO
+#RUN rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+#RUN yum -y install jenkins-${JENKINS_VERSION}
 RUN mkdir -p $JENKINS_HOME/plugins
+RUN curl --silent --show-error --retry 12 --retry-delay 10 -L -o $JENKINS_HOME/jenkins.war $JENKINS_URL
 RUN curl --silent --show-error --retry 12 --retry-delay 10 -L -o $JENKINS_HOME/plugins/gearman-plugin.hpi $JENKINS_GEARMAN_PLUGIN
 
 RUN pip install virtualenv nose flake8 mock
