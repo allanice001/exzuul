@@ -21,7 +21,7 @@ ENV MYSQLJAVA_URL http://repo2.maven.org/maven2/mysql/mysql-connector-java/${MYS
 ENV BCPROVJAVA_URL http://central.maven.org/maven2/org/bouncycastle/bcprov-${BCPROVJDK_VERSION}/${BCPROV_VERSION}/bcprov-${BCPROVJDK_VERSION}-${BCPROV_VERSION}.jar
 ENV BCPKIXJAVA_URL http://central.maven.org/maven2/org/bouncycastle/bcpkix-${BCPKIXJDK_VERSION}/${BCPKIX_VERSION}/bcpkix-${BCPKIXJDK_VERSION}-${BCPKIX_VERSION}.jar
 
-ENV JENKINS_VERSION 1.580-1.1
+ENV JENKINS_VERSION 2.21-1.1
 ENV JENKINS_REPO http://pkg.jenkins-ci.org/redhat/jenkins.repo
 ENV JENKINS_REPO_KEY http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
 ENV JENKINS_REPO_PLUGINS https://updates.jenkins-ci.org/download/plugins
